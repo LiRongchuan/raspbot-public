@@ -43,7 +43,7 @@ Microphone/speaker connection
 3. Clone the Project
 ```
 git clone https://github.com/LiRongchuan/raspbot-public.git
-cd raspbot
+cd raspbot-public
 ```
 
 4. Install Dependencies
