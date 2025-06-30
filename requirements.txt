@@ -1,0 +1,9 @@
+pyaudio  
+wave  
+numpy
+requests
+python-dotenv
+pydub
+qwen-agent[gui,rag,code_interpreter,mcp]
+pyttsx3
+smbus
