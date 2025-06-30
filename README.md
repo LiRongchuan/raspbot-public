@@ -1,7 +1,7 @@
 # Raspberry Pi Wearable Device: Voice Assistant & Fall Detection System
 
 ## Project Overview
-This project is a smart wearable device based on Raspberry Pi, integrating a voice interaction assistant and real-time fall detection functionality, specifically designed for the elderly and individuals requiring special care. The device uses sensors to monitor body movement in real-time, automatically triggering an alarm when a fall is detected and enabling help-seeking through the voice assistant. It also supports voice control for weather queries, time announcements, emergency contacts, and more.
+This project is a smart wearable device based on Raspberry Pi, integrating a voice interaction assistant and real-time fall detection functionality, specifically designed for the elderly and individuals requiring special care. The device uses sensors to monitor body movement in real-time, automatically triggering an alarm when a fall is detected and enabling help-seeking through the voice assistant. It also supports emergency alarm on wechat.
 
 ## Features
 
