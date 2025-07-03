@@ -5,10 +5,10 @@ from dashscope.audio.asr import TranslationRecognizerCallback, TranscriptionResu
 
 class ASRCallback(TranslationRecognizerCallback):
     
-    def __init__(self, user_input_ready, user_input_text):
+    def __init__(self, user_input_ready):
         super().__init__()
         self.user_input_ready = user_input_ready
-        self.user_input_text = user_input_text
+        self.user_input_text = ""
         self.transcription_buffer = ""
         self.timer = None
         self.is_listening = True
@@ -57,3 +57,6 @@ class ASRCallback(TranslationRecognizerCallback):
             print(f"检测到停顿，用户输入完成：{self.user_input_text}")
             self.is_listening = False
             self.user_input_ready.set()
+            
+    def get_text(self):
+        return self.user_input_text
