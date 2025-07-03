@@ -60,6 +60,6 @@ Get ServerChan API key by login https://sct.ftqq.com/
 python main.py
 ```
 
-7. (Optional) Add Instructions
-    (1) Modify `INST` and `PROMPT` to support new instructions
+7. (Optional) Add Instructions \
+    (1) Modify `INST` and `PROMPT` to support new instructions \
     (2) Implement handlers in `util.handler` for your new instructions
