@@ -3,7 +3,7 @@ import time
 import requests
 import threading
 from dotenv import load_dotenv
-from util.mpu6050 import mpu6050
+from util.mpu6050 import MPU6050
 
 load_dotenv('key.env')
 WECHAT_SCKEY = os.environ['wechat_key']
@@ -28,7 +28,7 @@ def wechatPushTask(message="检测到佩戴者跌倒！"):
         print(f"\n微信推送异常: {str(e)}")
 
 detect_stop = threading.Event()
-mpu = mpu6050(0x68)
+mpu = MPU6050(0x68)
 
 def detectTask():
     cnt = 0
@@ -43,8 +43,8 @@ def detectTask():
                 cnt += 1
             else:
                 cnt = 0
-        except Exception:
-            break
+        except Exception as e:
+            print(e)
         time.sleep(0.05)
     print("停止跌倒检测")
         

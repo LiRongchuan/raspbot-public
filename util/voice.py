@@ -22,10 +22,10 @@ user_input_ready = threading.Event()
 # Process input, respond with LLM
 messages = []
 handler = Handler()
-def process_input(user_input):
+def process_input(user_input, prompt_id=0):
     global messages
     print(f"\n处理用户输入: {user_input}")
-    messages.append({"role": "user", "content": PROMPT + user_input})
+    messages.append({"role": "user", "content": PROMPT[prompt_id] + user_input})
     responses = Generation.call(
         model="qwen-turbo",
         messages=messages,
@@ -45,16 +45,18 @@ def process_input(user_input):
         if response.status_code == HTTPStatus.OK:
             content = response.output.choices[0]["message"]["content"]
             reply += content
-            print(content,end="",flush=True)
-            if not LOCAL_TTS:
-                synthesizer.streaming_call(content)  # 不需要 start()
+            print(content, end="", flush=True)
+            if not LOCAL_TTS and prompt_id == 0:
+                synthesizer.streaming_call(content)
         else:
             print(f"\n生成回复失败: {response.message}")
-    # 加入指令处理
-    code, reply = reply.split('#', 2)
-    handler.handle(code)
+    if prompt_id == 1:
+        handler.set_reminder(reply)
+        reply = "好的。"
+        synthesizer.streaming_call(reply)
+        print(reply)
     messages.append({"role": "assistant", "content": reply})
-    synthesizer.speak(reply) if LOCAL_TTS else synthesizer.streaming_complete()  # 仍需调用
+    synthesizer.speak(reply) if LOCAL_TTS else synthesizer.streaming_complete()
     print("\n回复播放完成，重新进入监听状态")
     
 # Main Loop
@@ -62,6 +64,7 @@ def run_assistant():
     user_input_ready.clear()
     asr_callback = None
     recognizer = None
+    handler.fall_detc_start() # 开启跌倒检测
     while True:
         print("\n等待用户输入...")
         if asr_callback:
@@ -89,7 +92,8 @@ def run_assistant():
         recognizer.stop()
         user_input_text = asr_callback.get_text()
         if user_input_ready.is_set():
-            process_input(user_input_text)
+            prompt_id = 1 if "分钟" in user_input_text else 0
+            process_input(user_input_text, prompt_id)
             user_input_ready.clear()
 
 if __name__ == "__main__":

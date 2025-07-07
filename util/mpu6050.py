@@ -1,6 +1,6 @@
 import smbus
 
-class mpu6050:
+class MPU6050:
 
     # Global Variables
     GRAVITIY_MS2 = 9.80665
@@ -196,3 +196,9 @@ class mpu6050:
         gyro = self.get_gyro_data()
 
         return [accel, gyro, temp]
+    
+if __name__ == "__main__":
+    mpu = MPU6050(0x68)
+    while True:
+        gyro_data = mpu.get_gyro_data()
+        print(gyro_data)
